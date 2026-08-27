@@ -1,0 +1,13 @@
+# Normaliza finales de línea: en el repo siempre LF, en el working copy lo que
+# use cada SO. Evita que todo el árbol aparezca como modificado en Windows.
+* text=auto eol=lf
+
+# Binarios: nunca tocar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.svg binary
+*.pdf binary
+*.woff binary
+*.woff2 binary

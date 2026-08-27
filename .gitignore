@@ -1,0 +1,31 @@
+# Dependencias
+node_modules/
+
+# Build / salida de Vite (la genera el workflow, no se versiona)
+dist/
+dist-ssr/
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+*.log
+
+# Editores / SO
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Herramientas locales
+.impeccable/
+.claude/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JOS — redirigiendo…</title>
+    <script>
+      // GitHub Pages sirve este archivo ante cualquier ruta que no exista.
+      // JOS es una SPA de una sola ruta ("/portafolio-personal/") que solo usa
+      // query-strings (?open=...), asi que mandamos al index conservando
+      // los parametros para que los deep-links sigan funcionando.
+      var base = "/portafolio-personal/";
+      var q = window.location.search || "";
+      var h = window.location.hash || "";
+      window.location.replace(base + q + h);
+    </script>
+  </head>
+  <body>
+    <p>Redirigiendo a <a href="/portafolio-personal/">JOS</a>…</p>
+  </body>
+</html>

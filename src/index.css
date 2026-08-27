@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta JOS — terminal ambar sobre carbon azulado, no el verde-neon generico */
+  --color-jos-bg: #12141c;
+  --color-jos-bg-deep: #0a0b10;
+  --color-jos-chrome: #1c1f2b;
+  --color-jos-chrome-light: #262a3a;
+  --color-jos-border: #343951;
+  --color-jos-text: #e8e6e1;
+  --color-jos-text-dim: #9a9cae;
+  --color-jos-amber: #f2a93b;
+  --color-jos-amber-dim: #b8792a;
+  --color-jos-cyan: #5eead4;
+  --color-jos-red: #e8615c;
+
+  --font-mono: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* --- Fase 1 (guia de diseno): sistema de profundidad en 4 niveles ---
+   No son colores de Tailwind, son box-shadows compuestos: capa de sombra +
+   un highlight de 1px en el borde superior que simula luz rebotando.
+   Ese highlight es la mayor parte del "peso" visual, no el blur en si. */
+:root {
+  --elevation-1:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 4px 10px -4px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --elevation-2:
+    0 2px 6px -2px rgba(0, 0, 0, 0.45),
+    0 16px 36px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --elevation-3:
+    0 4px 12px -4px rgba(0, 0, 0, 0.55),
+    0 28px 64px -14px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --elevation-taskbar: 0 -6px 22px -6px rgba(0, 0, 0, 0.5);
+}
+
+/* En el tema claro, sombras negras puras se ven "sucias" sobre fondos
+   claros — se suaviza la opacidad y se le baja intensidad al highlight,
+   que en un tema claro no tiene sentido (no hay "luz rebotando" en un
+   borde ya claro). */
+.jos-theme-light {
+  --elevation-1:
+    0 1px 2px rgba(30, 32, 46, 0.08),
+    0 4px 10px -4px rgba(30, 32, 46, 0.12);
+  --elevation-2:
+    0 2px 6px -2px rgba(30, 32, 46, 0.1),
+    0 16px 32px -12px rgba(30, 32, 46, 0.18);
+  --elevation-3:
+    0 4px 12px -4px rgba(30, 32, 46, 0.14),
+    0 24px 56px -16px rgba(30, 32, 46, 0.24);
+  --elevation-taskbar: 0 -6px 18px -8px rgba(30, 32, 46, 0.14);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--color-jos-bg-deep);
+    color: var(--color-jos-text);
+    font-family: var(--font-sans);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-jos-amber);
+    color: var(--color-jos-bg-deep);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-jos-chrome);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-jos-border);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-jos-amber-dim);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-jos-amber);
+    outline-offset: 2px;
+  }
+}
+
+/* Fase 1: clases de elevacion — reemplazan los shadow-2xl/shadow-lg
+   genericos de Tailwind repartidos por los componentes.
+   Declaradas con @utility (API de Tailwind v4, no @layer utilities) para
+   que soporten variantes como group-hover:jos-elevation-2 automaticamente;
+   una clase definida a mano dentro de @layer utilities NO genera variantes. */
+@utility jos-elevation-1 {
+  box-shadow: var(--elevation-1);
+}
+@utility jos-elevation-2 {
+  box-shadow: var(--elevation-2);
+}
+@utility jos-elevation-3 {
+  box-shadow: var(--elevation-3);
+}
+@utility jos-elevation-taskbar {
+  box-shadow: var(--elevation-taskbar);
+}
+
+/* Fase 2 (guia de diseno): vibrancy transversal.
+   StartMenu, GlobalSearch, NotificationCenter y el popover de config rapida
+   son overlays temporales, no ventanas de contenido — llevan blur/transparencia
+   siempre, sin depender del toggle "glassEnabled" (ese toggle es solo para
+   las ventanas de aplicacion, donde el usuario puede preferir texto 100%
+   legible sin blur detras). */
+@utility jos-overlay-glass {
+  background-color: color-mix(in oklab, var(--color-jos-chrome) 85%, transparent);
+  border-color: color-mix(in oklab, var(--color-jos-border) 70%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Fase 4 (guia de diseno): la barra de titulo pasa de un tono plano a un
+   degradado sutil de 1-2% de luminosidad (mas claro arriba, mas oscuro
+   abajo) — el detalle que hace que el chrome se sienta "renderizado" en
+   vez de "pintado". Version solida y version glass (preserva la alpha
+   que ya trae bg-jos-chrome/45 en vez de quedar opaca). */
+@utility jos-titlebar {
+  background-color: var(--color-jos-chrome);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 5%, transparent),
+    color-mix(in oklab, black 6%, transparent)
+  );
+}
+@utility jos-titlebar-glass {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--color-jos-chrome) 46%, transparent),
+    color-mix(in oklab, var(--color-jos-chrome) 38%, transparent)
+  );
+}
+
+/* Fase 5 (guia de diseno): fondo con 2 tonos en vez de plano, para iconos
+   de escritorio y widgets flotantes — evita el look "wireframe". */
+@utility jos-icon-surface {
+  background-color: var(--color-jos-chrome);
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--color-jos-chrome-light) 65%, transparent),
+    color-mix(in oklab, var(--color-jos-chrome) 92%, transparent)
+  );
+}
+
+@layer utilities {
+  /* Textura sutil de CRT sobre el escritorio: la firma visual del sistema */
+  .jos-scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.015) 0px,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  /* Tema desbloqueado por el Konami code */
+  .jos-theme-special {
+    --color-jos-amber: #5eead4;
+    --color-jos-amber-dim: #2dd4bf;
+    --color-jos-cyan: #f2a93b;
+  }
+
+  /* --- Fase 4: sistema de temas multiples (seleccionables desde Settings) --- */
+
+  /* Claro: mismo lenguaje de sistema, inverso de luminancia */
+  .jos-theme-light {
+    --color-jos-bg: #eceff4;
+    --color-jos-bg-deep: #dde2eb;
+    --color-jos-chrome: #f5f6fa;
+    --color-jos-chrome-light: #ffffff;
+    --color-jos-border: #c7cddb;
+    --color-jos-text: #1b1d27;
+    --color-jos-text-dim: #5a5f75;
+    --color-jos-amber: #b8792a;
+    --color-jos-amber-dim: #96601f;
+    --color-jos-cyan: #0f8f7d;
+    --color-jos-red: #c23b36;
+  }
+
+  /* Glass: carbon translucido, pensado para usarse con el efecto Glass activo */
+  .jos-theme-glass {
+    --color-jos-bg: #161a26cc;
+    --color-jos-bg-deep: #0a0d16;
+    --color-jos-chrome: #1e2436aa;
+    --color-jos-chrome-light: #2a3149cc;
+    --color-jos-border: #4a5578;
+    --color-jos-text: #eef0f7;
+    --color-jos-text-dim: #a6acc4;
+    --color-jos-amber: #7dd3fc;
+    --color-jos-amber-dim: #38bdf8;
+    --color-jos-cyan: #f2a93b;
+    --color-jos-red: #f87171;
+  }
+
+  /* Aurora: acentos purpura/rosa sobre carbon frio */
+  .jos-theme-aurora {
+    --color-jos-bg: #15121f;
+    --color-jos-bg-deep: #0b0912;
+    --color-jos-chrome: #211c30;
+    --color-jos-chrome-light: #2c2540;
+    --color-jos-border: #453a63;
+    --color-jos-text: #f1e9ff;
+    --color-jos-text-dim: #b3a4d1;
+    --color-jos-amber: #e879f9;
+    --color-jos-amber-dim: #c026d3;
+    --color-jos-cyan: #67e8f9;
+    --color-jos-red: #fb7185;
+  }
+
+  /* Midnight: azul indigo profundo */
+  .jos-theme-midnight {
+    --color-jos-bg: #0d1326;
+    --color-jos-bg-deep: #060a17;
+    --color-jos-chrome: #141c38;
+    --color-jos-chrome-light: #1c2748;
+    --color-jos-border: #2c3a66;
+    --color-jos-text: #e6ebff;
+    --color-jos-text-dim: #8b96c4;
+    --color-jos-amber: #60a5fa;
+    --color-jos-amber-dim: #3b82f6;
+    --color-jos-cyan: #34d399;
+    --color-jos-red: #f87171;
+  }
+
+  /* Minimal: escala de grises, sin acento calido, maxima sobriedad */
+  .jos-theme-minimal {
+    --color-jos-bg: #141414;
+    --color-jos-bg-deep: #0a0a0a;
+    --color-jos-chrome: #1e1e1e;
+    --color-jos-chrome-light: #292929;
+    --color-jos-border: #3a3a3a;
+    --color-jos-text: #f2f2f2;
+    --color-jos-text-dim: #8f8f8f;
+    --color-jos-amber: #e5e5e5;
+    --color-jos-amber-dim: #b3b3b3;
+    --color-jos-cyan: #cfcfcf;
+    --color-jos-red: #e5605b;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
