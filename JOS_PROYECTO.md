@@ -238,8 +238,8 @@ Sitio estático publicado en **GitHub Pages** vía **GitHub Actions** (build en 
 - `index.html`: `og:image`/`twitter:image`/`og:url` pasados a URL absoluta completa (Vite no reescribe metaetiquetas).
 - `public/404.html`: redirige a `/portafolio-personal/` conservando `?query` (red de seguridad para deep-links).
 - `.github/workflows/deploy.yml` (Node 22, `npm ci`, `npm run build`, `upload-pages-artifact` + `deploy-pages`). Dispara en push a `main`.
-- Pendiente manual del usuario: **Settings → Pages → Source → "GitHub Actions"** (una vez); si el primer run falló en el paso deploy, re-lanzarlo desde Actions.
-- Verificado: `tsc -b` + `npm run build` (rutas `/portafolio-personal/…` correctas en `dist/index.html`) + `npm run preview` con `curl` (root/wallpaper/cv/deep-link todos 200). No verificado aún en la URL pública real (depende de que el usuario active Pages).
+- **En vivo y funcionando (2026-08-27).** El usuario activó Pages (Settings → Pages → Source → "GitHub Actions"); el workflow pasa `build` + `deploy` y `https://juanezzzzz.github.io/portafolio-personal/` sirve el sitio con todos los assets (wallpapers, CV, foto, 404.html) en 200. El primer run falló solo en el paso deploy por no tener Pages activo todavía; se re-lanzó con un commit vacío tras activarlo.
+- Verificado: `tsc -b` + `npm run build` (rutas `/portafolio-personal/…` correctas en `dist/index.html`) + `npm run preview` con `curl` + la URL pública real con `curl` (todo 200).
 - La Fase 3 (Juan AI) sigue necesitando decidir hosting con funciones serverless — Pages solo sirve estáticos; opciones en `DESPLIEGUE.md` §11.
 
 ---
