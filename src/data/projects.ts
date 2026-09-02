@@ -336,8 +336,8 @@ mensajes, panel administrativo, autenticacion y el flujo de voz.
 - **Frontend:** Angular 18
 - **Datos:** Supabase (PostgreSQL)
 - **Canal:** Telegram Bot API (webhooks)
-- **IA y voz:** modelos de lenguaje via API, Groq Whisper (transcripcion), Edge TTS (sintesis)
-- **Infraestructura:** Docker, Render (API), Vercel (panel)
+- **IA y voz:** LLM via OpenRouter, Groq Whisper (transcripcion), Edge TTS (sintesis)
+- **Infraestructura:** Docker, Render (API), Vercel (frontend)
 
 ## Hacia donde puede evolucionar
 
@@ -367,7 +367,7 @@ export const projects: Project[] = [
       "Angular 18",
       "Supabase (PostgreSQL)",
       "Telegram Bot API",
-      "LLM vía API",
+      "OpenRouter (LLM)",
       "Groq Whisper",
       "Edge TTS",
       "Docker",
@@ -417,13 +417,22 @@ export const projects: Project[] = [
       layers: [
         { layer: "api/routers/", detail: "Endpoints FastAPI y enrutamiento del webhook de Telegram." },
         { layer: "agents/", detail: "Los tres agentes: recepción y extracción, estructuración y persistencia, atención y búsqueda. Aquí vive la lógica de negocio." },
-        { layer: "integrations/", detail: "Servicios externos aislados: LLM vía API, Groq Whisper (transcripción), Edge TTS (síntesis de voz), Telegram." },
+        { layer: "integrations/", detail: "Servicios externos aislados: LLM vía OpenRouter, Groq Whisper (transcripción), Edge TTS (síntesis de voz), Telegram Bot API." },
         { layer: "repositories/", detail: "Acceso a datos sobre Supabase (PostgreSQL), separado de la lógica de los agentes." },
         { layer: "schemas/", detail: "Contratos de datos con Pydantic: validación en la frontera, no dispersa por el código." },
-        { layer: "Frontend", detail: "Panel administrativo en Angular 18, desplegado en Vercel." },
-        { layer: "Infraestructura", detail: "Docker; API en Render y panel en Vercel." },
+        { layer: "Frontend", detail: "Aplicación web en Angular 18 desplegada en Vercel: mapa de ofertas por municipio, búsqueda con IA y formulario para publicar." },
+        { layer: "Infraestructura", detail: "Docker; API en Render y frontend en Vercel." },
         { layer: "Calidad", detail: "344 pruebas automatizadas que corren sin servicios externos, más degradación controlada ante fallos." },
       ],
+    },
+    screenshots: [
+      "/projects/agroia/inicio.webp",
+      "/projects/agroia/buscar.webp",
+      "/projects/agroia/publicar.webp",
+    ],
+    links: {
+      demo: "https://control-z-team.vercel.app",
+      github: "https://github.com/juanezzzzz/Control-Z-Team",
     },
     readme: AGROIA_README,
   },
