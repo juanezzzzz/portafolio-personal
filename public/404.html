@@ -5,16 +5,21 @@
     <title>JOS — redirigiendo…</title>
     <script>
       // GitHub Pages sirve este archivo ante cualquier ruta que no exista.
-      // JOS es una SPA de una sola ruta ("/portafolio-personal/") que solo usa
-      // query-strings (?open=...), asi que mandamos al index conservando
-      // los parametros para que los deep-links sigan funcionando.
-      var base = "/portafolio-personal/";
+      // JOS es una SPA de una sola ruta que solo usa query-strings (?open=...),
+      // asi que mandamos al index conservando los parametros para que los
+      // deep-links sigan funcionando.
+      //
+      // El base se deduce de la URL en vez de fijarlo, porque el sitio vive en
+      // dos sitios a la vez: en Vercel cuelga de la raiz ("/") y en GitHub
+      // Pages de la subruta del repo ("/portafolio-personal/").
+      var REPO = "/portafolio-personal/";
+      var base = window.location.pathname.indexOf(REPO) === 0 ? REPO : "/";
       var q = window.location.search || "";
       var h = window.location.hash || "";
       window.location.replace(base + q + h);
     </script>
   </head>
   <body>
-    <p>Redirigiendo a <a href="/portafolio-personal/">JOS</a>…</p>
+    <p>Redirigiendo a <a href="/">JOS</a>…</p>
   </body>
 </html>

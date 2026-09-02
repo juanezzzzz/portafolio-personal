@@ -1,11 +1,40 @@
-# Despliegue — JOS en GitHub Pages
+# Despliegue — JOS
 
-Guía completa para publicar JOS ("Juan Operating System") en GitHub Pages y
-mantenerlo actualizado.
+JOS se publica **en dos sitios a la vez** desde el mismo repositorio y la misma
+rama `main`:
+
+| Destino | URL | Se sirve en | Método |
+| --- | --- | --- | --- |
+| **Vercel** (principal) | *(pendiente de conectar)* | la raíz del dominio | Integración con GitHub: cada push a `main` despliega |
+| **GitHub Pages** | `https://juanezzzzz.github.io/portafolio-personal/` | la subruta `/portafolio-personal/` | GitHub Actions (`.github/workflows/deploy.yml`) |
 
 - **Repositorio:** `https://github.com/juanezzzzz/portafolio-personal`
-- **URL pública final:** `https://juanezzzzz.github.io/portafolio-personal/`
-- **Método:** GitHub Actions (build en la nube, sin rama `gh-pages`, sin subir `dist/`)
+- Ninguno de los dos versiona `dist/` ni usa rama `gh-pages`.
+
+## La pieza clave: el `base` cambia según el destino
+
+Vite necesita saber bajo qué ruta se sirve el sitio para escribir bien los
+`<script src>` y `<link href>`. Y no es la misma en los dos destinos:
+
+```
+Vercel        -> https://<dominio>/              -> base "/"
+GitHub Pages  -> https://…/portafolio-personal/  -> base "/portafolio-personal/"
+```
+
+Por eso `vite.config.ts` **no** lo tiene fijo, sino que lo lee del entorno:
+
+```ts
+const base = process.env.DEPLOY_BASE ?? "/";
+```
+
+- **Vercel** compila sin la variable → `base = "/"`. Correcto, sin configurar nada.
+- **GitHub Pages**: el workflow exporta `DEPLOY_BASE: /portafolio-personal/` en el
+  paso de build.
+- **`npm run dev`**: Vite ignora el `base` y sirve en `/`.
+
+> Si algún día se rompe el sitio de Pages con pantalla en blanco y 404 de
+> `assets/*.js`, lo primero que hay que mirar es que el workflow siga
+> exportando `DEPLOY_BASE`.
 
 ---
 
@@ -43,6 +72,39 @@ están y qué tocar si cambia la URL:
 
 **Regla de oro:** cualquier ruta nueva a un archivo de `/public` debe pasar por
 `asset("/ruta/al/archivo")`. Nunca `"/ruta/al/archivo"` a secas.
+
+---
+
+## 2.5 Conectar Vercel (una sola vez)
+
+Vercel se conecta desde su panel, importando el repo de GitHub. No hace falta
+CLI ni tocar el código: `vercel.json` ya está en el repo.
+
+1. Entra a `https://vercel.com/new` con tu cuenta de GitHub.
+2. **Import Git Repository** → elige `juanezzzzz/portafolio-personal`.
+3. Vercel detecta Vite solo. Deja los valores por defecto:
+   - Framework Preset: **Vite**
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - **No** definas la variable `DEPLOY_BASE` — su ausencia es lo que hace que
+     el `base` quede en `/`, que es lo correcto para Vercel.
+4. **Deploy**. En 1–2 minutos queda en `https://<proyecto>.vercel.app`.
+
+A partir de ahí, cada push a `main` despliega en Vercel **y** en Pages, en
+paralelo e independientes.
+
+### Qué aporta `vercel.json`
+
+| Clave | Para qué |
+| --- | --- |
+| `rewrites` | JOS es una SPA: cualquier ruta debe servir `index.html` para que los deep-links (`?open=project:agroia`) no den 404. Es el equivalente en Vercel al `public/404.html` de Pages. |
+| `headers` | Caché inmutable de un año para `/assets/*`, que ya llevan hash en el nombre. |
+
+### Después del primer deploy
+
+Las metaetiquetas `og:url`, `og:image` y `twitter:image` de `index.html` siguen
+apuntando a la URL de GitHub Pages. Cuando exista el dominio de Vercel hay que
+cambiarlas a la URL canónica, porque son absolutas y Vite no las reescribe.
 
 ---
 
@@ -162,11 +224,13 @@ Tras cualquiera de estos cambios: `npm run build` local para verificar, commit y
 ## 11. Nota sobre la Fase 3 (Juan AI)
 
 El asistente conversacional planeado necesita una función serverless con una API
-key, algo que GitHub Pages **no** puede hostear (solo sirve estáticos). Cuando se
-llegue a esa fase habrá que:
+key, algo que GitHub Pages **no** puede hostear (solo sirve estáticos).
 
-- o mover el hosting a Vercel/Netlify/Cloudflare Pages (que sí tienen funciones),
-- o dejar el sitio en GitHub Pages y hostear solo la función aparte
-  (Cloudflare Workers / Vercel Functions) y llamarla por fetch desde el cliente.
+Con Vercel ya conectado, esto deja de ser un bloqueo: las funciones van en
+`api/` en la raíz del repo y Vercel las despliega solas, con la API key guardada
+en sus *Environment Variables* (nunca en el repo).
 
-Ese cambio no afecta lo descrito aquí hasta que la Fase 3 empiece.
+Ojo: esa función **solo** existirá en Vercel. La copia servida por GitHub Pages
+seguirá siendo estática, así que Juan AI no funcionará ahí — habrá que decidir
+si se apaga Pages en ese momento o si la app degrada la funcionalidad cuando el
+endpoint no responde.

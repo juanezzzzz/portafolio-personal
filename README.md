@@ -137,16 +137,21 @@ src/
 
 ## Despliegue
 
-Push a `main` → GitHub Actions (`.github/workflows/deploy.yml`) hace
-`npm ci && npm run build` y publica `dist/` en Pages. No se versiona `dist/`
+El mismo `main` se publica en dos sitios a la vez:
+
+```
+                 ┌─> Vercel ────────> raíz del dominio          (base "/")
+push a main ─────┤
+                 └─> GitHub Actions ─> Pages, subruta del repo  (base "/portafolio-personal/")
+```
+
+Como cada destino sirve el sitio bajo una ruta distinta, `vite.config.ts` lee el
+`base` del entorno (`DEPLOY_BASE`) en vez de fijarlo: Vercel compila sin la
+variable y queda en `/`; el workflow de Pages la exporta. No se versiona `dist/`
 ni existe rama `gh-pages`.
 
-```
-push a main ──> Actions ──> build ──> Pages ──> juanezzzzz.github.io/portafolio-personal/
-```
-
-La guía completa (configuración inicial, verificación, cambio de URL y
-problemas frecuentes) está en [`DESPLIEGUE.md`](DESPLIEGUE.md).
+La guía completa (conectar Vercel, verificación, cambio de URL y problemas
+frecuentes) está en [`DESPLIEGUE.md`](DESPLIEGUE.md).
 
 ---
 

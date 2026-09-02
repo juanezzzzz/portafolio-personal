@@ -37,6 +37,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # Pages de proyecto sirve el sitio bajo /<nombre-repo>/. Vercel lo
+          # sirve en la raiz, por eso el default de vite.config.ts es "/".
+          DEPLOY_BASE: /portafolio-personal/
 
       - name: Subir artefacto de Pages
         uses: actions/upload-pages-artifact@v3
