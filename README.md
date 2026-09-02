@@ -54,6 +54,10 @@ información como un sistema operativo: cada parte del portafolio (About,
 Proyectos, Experiencia, CV, Terminal...) es una **app** que se abre en su propia
 ventana, se puede mover, redimensionar, minimizar, maximizar y apilar.
 
+<p align="center">
+  <img src="docs/capturas/tour-animado.gif" width="100%" alt="Tour de JOS: arrastrar una ventana y abrir varias apps en cascada">
+</p>
+
 Es 100 % client-side: no hay backend propio. Todo el contenido vive en
 `src/data/` y el sitio se compila a estáticos que sirve GitHub Pages.
 
