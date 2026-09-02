@@ -120,6 +120,12 @@ Todo lo configurable por el usuario persiste en `localStorage`:
 
 Cada tema reescribe la paleta completa del sistema (acentos, ventanas, taskbar y widgets):
 
+<p align="center">
+  <img src="docs/capturas/temas-animados.gif" width="100%" alt="Ciclo animado de los 6 temas de JOS">
+</p>
+
+Y cada uno en detalle:
+
 <table>
   <tr>
     <td width="33%"><img src="docs/capturas/temas/base.png" alt="Tema Ámbar"><br><sub><b>Ámbar</b> (base)</sub></td>
