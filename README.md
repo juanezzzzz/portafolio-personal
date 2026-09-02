@@ -21,6 +21,32 @@
 
 ---
 
+## Vistas
+
+<p align="center">
+  <a href="https://juanezzzzz.github.io/portafolio-personal/">
+    <img src="docs/capturas/proyectos.png" width="100%" alt="Escritorio de JOS con la app Proyectos abierta">
+  </a>
+  <br>
+  <em>El escritorio: iconos, widgets, taskbar y la app <strong>Proyectos</strong> con los trabajos reales.</em>
+</p>
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/capturas/about.png" alt="App About con bio, foto y CV"><br><sub><b>About</b> — bio, foto y CV descargable</sub></td>
+    <td width="50%"><img src="docs/capturas/skills.png" alt="App Skills con el stack por categoría"><br><sub><b>Skills</b> — stack agrupado por categoría</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/capturas/agroia.png" alt="Ventana del proyecto AgroIA mostrando el sitio real"><br><sub><b>Proyecto</b> — cada trabajo abre su ventana con pestañas y preview del sitio</sub></td>
+    <td width="50%"><img src="docs/capturas/settings.png" alt="App Settings con temas y wallpapers"><br><sub><b>Settings</b> — 6 temas, wallpapers y widgets</sub></td>
+  </tr>
+</table>
+
+> Las capturas se toman de la versión en vivo. Pruébalo tú:
+> [**abrir JOS**](https://juanezzzzz.github.io/portafolio-personal/).
+
+---
+
 ## Qué es
 
 En vez de una landing con secciones que se hacen scroll, JOS presenta la misma
