@@ -48,6 +48,8 @@ export function OverviewTab({
         <img
           src={screenshots[0]}
           alt={project.name}
+          loading="lazy"
+          decoding="async"
           className="mb-4 w-full rounded-lg border border-jos-border object-cover"
         />
       )}

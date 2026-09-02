@@ -10,6 +10,10 @@ export function About() {
           <img
             src={profile.photoUrl}
             alt={profile.name}
+            width={413}
+            height={531}
+            loading="lazy"
+            decoding="async"
             className="h-14 w-14 shrink-0 rounded-full border border-jos-border object-cover"
           />
           <div>

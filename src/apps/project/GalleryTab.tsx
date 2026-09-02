@@ -21,6 +21,8 @@ export function GalleryTab({
         <img
           src={screenshots[index]}
           alt={`${projectName} screenshot ${index + 1}`}
+          loading="lazy"
+          decoding="async"
           className="max-h-full max-w-full rounded-lg border border-jos-border object-contain"
         />
       </div>

@@ -8,9 +8,15 @@ export function Hero() {
       id="inicio"
       className="flex min-h-full flex-col items-center justify-center px-5 py-16 text-center"
     >
+      {/* Primera imagen visible en movil (LCP): se pide con prioridad en vez
+          de diferirse. width/height evitan el salto de layout al cargar. */}
       <img
         src={profile.photoUrl}
         alt={profile.name}
+        width={413}
+        height={531}
+        fetchPriority="high"
+        decoding="async"
         className="h-28 w-28 rounded-full border-2 border-jos-amber-dim object-cover shadow-[0_0_0_6px_rgba(242,169,59,0.08)]"
       />
 
