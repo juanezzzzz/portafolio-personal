@@ -116,6 +116,27 @@ Todo lo configurable por el usuario persiste en `localStorage`:
 - **Efecto glass**, velocidad de animación (slow / normal / fast) y sonidos del sistema
 - **Widgets flotantes**: reloj, calendario, clima, notas, música, stats, actividad de GitHub
 
+### Los 6 temas
+
+Cada tema reescribe la paleta completa del sistema (acentos, ventanas, taskbar y widgets):
+
+<table>
+  <tr>
+    <td width="33%"><img src="docs/capturas/temas/base.png" alt="Tema Ámbar"><br><sub><b>Ámbar</b> (base)</sub></td>
+    <td width="33%"><img src="docs/capturas/temas/light.png" alt="Tema Claro"><br><sub><b>Claro</b></sub></td>
+    <td width="33%"><img src="docs/capturas/temas/glass.png" alt="Tema Glass"><br><sub><b>Glass</b></sub></td>
+  </tr>
+  <tr>
+    <td width="33%"><img src="docs/capturas/temas/aurora.png" alt="Tema Aurora"><br><sub><b>Aurora</b></sub></td>
+    <td width="33%"><img src="docs/capturas/temas/midnight.png" alt="Tema Midnight"><br><sub><b>Midnight</b></sub></td>
+    <td width="33%"><img src="docs/capturas/temas/minimal.png" alt="Tema Minimal"><br><sub><b>Minimal</b></sub></td>
+  </tr>
+</table>
+
+> Las transiciones entre temas, el arranque, el minimizar/maximizar de ventanas y
+> los widgets son animados — para verlos en movimiento, entra a la
+> [versión en vivo](https://juanezzzzz.github.io/portafolio-personal/).
+
 ---
 
 ## Detalles que vale la pena mirar
