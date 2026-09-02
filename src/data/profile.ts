@@ -5,13 +5,13 @@ import { asset } from "../lib/asset";
 
 export const profile = {
   name: "Juan Esteban Valencia Arredondo",
-  role: "Fullstack Developer en formación · Estudiante ADSO (SENA)",
+  role: "Desarrollador Backend / Full Stack Junior · Estudiante ADSO (SENA)",
   location: "Yopal, Casanare, Colombia",
   status: "Disponible para roles junior y colaboración",
   email: "juanestebanvalencia.dev@gmail.com",
   phone: "+57 310 467 8335",
   github: "https://github.com/juanezzzzz",
-  linkedin: "https://linkedin.com/in/juanestebanvalenciaa1111",
+  linkedin: "https://linkedin.com/in/juanestebanvalenciadev",
   instagram: "https://www.instagram.com/_juanezzzzz/",
   /** PDF real (convertido del .docx fuente), servido como asset estatico
    * desde /public/cv — no se genera en el cliente para evitar reconstruir
@@ -20,14 +20,15 @@ export const profile = {
   /** Foto de perfil para About — recorte cuadrado, se muestra circular. */
   photoUrl: asset("/profile/juan.jpg"),
   bio: [
-    "Desarrollador Fullstack en formación con experiencia construyendo APIs REST en Go, Django (Python) y NestJS (TypeScript), además de interfaces con React y Next.js.",
-    "Manejo PostgreSQL y MongoDB, arquitectura de microservicios, autenticación JWT y control de versiones con Git Flow. Autodidacta, orientado al detalle y comprometido con el código limpio y las soluciones escalables.",
-    "Estudiante de desarrollo de software construyendo proyectos reales para pasar de la teoría a la práctica — interesado en desarrollo web, código limpio y resolver problemas de punta a punta.",
+    "Estudiante de Análisis y Desarrollo de Software del SENA con experiencia construyendo y desplegando software utilizado por usuarios reales.",
+    "Primer lugar en la Hackathon Regional Casanare (Colombia 5.0 — MinTIC, TEVEANDINA S.A.S. y Universidad Distrital) con AgroIA Casanare, un sistema de agentes de Inteligencia Artificial para comercialización agrícola, desarrollado en equipo.",
+    "He construido y desplegado APIs REST y microservicios en Python (FastAPI, Django), Go y NestJS, y aplicaciones frontend en Angular, React y Next.js — de forma individual y en equipos que aplican Git Flow, sprints semanales y diseño previo en Figma.",
   ],
   /** Fortalezas / core competencies del CV, para mostrar como chips en About. */
   highlights: [
+    "1.er lugar en la Hackathon Regional Casanare (Colombia 5.0) con un sistema de agentes de IA",
     "Desarrollo fullstack: de UI (Figma) a despliegue (Vercel)",
-    "Diseño de APIs REST en múltiples stacks (Go, Python/Django, TypeScript/NestJS)",
+    "Diseño de APIs REST en múltiples stacks (Go, Python/FastAPI y Django, TypeScript/NestJS)",
     "Adopción rápida y autónoma de nuevas tecnologías",
     "Pensamiento analítico y resolución práctica de problemas",
     "Atención al detalle y compromiso con la calidad de código",
@@ -40,10 +41,10 @@ export const profile = {
     "Participar en equipos de desarrollo reales, aprendiendo buenas prácticas de ingeniería y aportando soluciones funcionales desde el inicio.",
   ],
   /** Un subconjunto curado del stack completo (ver Skills), no la lista entera. */
-  favoriteTech: ["Go", "TypeScript", "React", "PostgreSQL"],
+  favoriteTech: ["Python", "FastAPI", "TypeScript", "PostgreSQL"],
   languages: [
     { name: "Español", level: "Nativo" },
-    { name: "Inglés", level: "A2–B1 (Instituto Open Mind, en curso)" },
+    { name: "Inglés", level: "B1 — en formación hacia B2 (Instituto Open Mind)" },
   ],
   /** Detalle personal del README — le da un toque humano a About, no solo curricular. */
   outsideOfCode: "Fuera del código: siempre aprendiendo algo nuevo, viendo series y jugando.",
@@ -51,17 +52,18 @@ export const profile = {
 
 export const experience = [
   {
-    role: "Monitor de aprendices — Área SST",
-    org: "SENA",
-    period: "2025 — actualidad",
+    role: "Monitor SST (Seguridad y Salud en el Trabajo)",
+    org: "SENA CAFEC · Yopal, Casanare",
+    period: "Junio 2026 — actualidad",
     description:
-      "Apoyo a la fase de Seguridad y Salud en el Trabajo, desarrollo de herramientas interactivas de capacitación (Zona Segura). Rol que exigió y certificó habilidades de liderazgo y trabajo en equipo.",
+      "Apoyo técnico (soporte TI) a la unidad de Seguridad y Salud en el Trabajo de SENA CAFEC Casanare, y desarrollo de herramientas interactivas de capacitación. Rol que exigió y certificó habilidades de liderazgo y trabajo en equipo.",
     achievements: [
-      "Diseñé y desarrollé 'Zona Segura', un juego educativo de 4 rondas para capacitar en SST: clasificación de riesgos en una cinta transportadora, memorama de conceptos, ruleta de preguntas y selección de EPP por área de trabajo.",
-      "Implementé animaciones y transiciones con GSAP para que el juego funcionara como pieza interactiva en un stand de feria científica (Ciudad Científica — CAFEC).",
+      "Brindé soporte TI a la unidad de SST: conectividad, WiFi, impresoras y herramientas TIC, con atención directa a usuarios y personal del área.",
+      "Diseñé, construí y presenté 'Zona Segura', una plataforma web de capacitación gamificada de 3 módulos (juego de SST de 4 rondas, entrenador de ejercicios vocales con detección de voz y respiración guiada) usada por aprendices del SENA.",
+      "Realicé presentaciones y demostraciones en vivo de la herramienta ante personal y aprendices, promoviendo el aprendizaje participativo en temas de SST.",
       "Certifiqué habilidades de liderazgo y trabajo en equipo como parte de las funciones del rol.",
     ],
-    tech: ["HTML5", "CSS3", "JavaScript", "GSAP"],
+    tech: ["HTML5", "CSS3", "JavaScript", "Web Audio API", "GSAP"],
   },
 ];
 
@@ -88,6 +90,12 @@ export const education = [
 ];
 
 export const certifications = [
+  {
+    title: "Implementación de Servicios de Computación en la Nube",
+    org: "SENA · Formación complementaria virtual",
+    period: "Jul–Ago 2026",
+    hours: "Certificado",
+  },
   {
     title: "Marketing Digital a través de Redes Sociales",
     org: "MinTIC & Universidad Distrital Francisco José de Caldas",
@@ -134,25 +142,48 @@ export const skillCategories = [
   {
     category: "Backend & APIs",
     items: [
+      "FastAPI",
       "NestJS",
       "Django REST Framework",
-      "Go (Gorilla Mux)",
+      "Go (Gorilla Mux, Beego)",
       "Node.js",
+      "APIs REST",
+      "Webhooks",
       "Arquitectura de microservicios",
       "JWT",
+      "Pydantic",
+    ],
+  },
+  {
+    category: "IA aplicada",
+    items: [
+      "Agentes de IA",
+      "Modelos de lenguaje (LLM) vía API",
+      "Groq Whisper (transcripción de voz)",
+      "Edge TTS (síntesis de voz)",
+      "Telegram Bot API",
     ],
   },
   {
     category: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS"],
+    items: ["React", "Next.js", "Angular", "Tailwind CSS"],
   },
   {
     category: "Bases de datos",
-    items: ["PostgreSQL", "MongoDB"],
+    items: ["PostgreSQL", "MongoDB", "Supabase"],
   },
   {
     category: "DevOps & Herramientas",
-    items: ["Git / GitHub (Git Flow)", "Vercel", "npm", "Postman"],
+    items: [
+      "Docker",
+      "Render",
+      "Vercel",
+      "Git / GitHub (Git Flow)",
+      "Pruebas automatizadas",
+      "npm",
+      "Postman",
+      "Swagger",
+    ],
   },
   {
     category: "Diseño & Datos",

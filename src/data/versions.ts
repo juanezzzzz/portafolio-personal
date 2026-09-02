@@ -42,7 +42,9 @@ export const SYSTEM_VERSIONS: SystemVersion[] = [
       "Certificación: Automatización de Chatbots con IA — SENA (nov. 2025)",
       "Certificación: Acelerador de Carrera con Power BI + IA — Daxus Latam (abr. 2026)",
       "Certificación: Marketing Digital a través de Redes Sociales — MinTIC (may. 2026)",
+      "Certificación: Implementación de Servicios de Computación en la Nube — SENA (ago. 2026)",
       "Representante regional (Orinoquía) en la ceremonia nacional de clausura de Social Tech (2026)",
+      "🥇 Primer lugar en la Hackathon Regional Casanare (Colombia 5.0) con AgroIA Casanare — equipo Control-Z (ago. 2026)",
     ],
   },
   {
@@ -64,7 +66,7 @@ export const SYSTEM_VERSIONS: SystemVersion[] = [
     status: "roadmap",
     summary: "Profundizar el stack técnico más allá de lo cubierto en el tecnólogo.",
     changelog: [
-      "Certificación en la nube (AWS/Azure/GCP, a definir)",
+      "Certificación en una nube específica (AWS/Azure/GCP) sobre la base ya cursada en el SENA",
       "Cierre del nivel de inglés a B2/C1",
       "Especialización en un framework o área elegida según el rumbo del primer empleo",
     ],

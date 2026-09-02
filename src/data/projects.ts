@@ -261,7 +261,172 @@ src/
 Proyecto de e-commerce sin pasarela de pago, orientado a negocios que cierran la venta por WhatsApp. Uso libre con fines de portafolio.
 `;
 
+const AGROIA_README = `# AgroIA Casanare
+
+Sistema de agentes de IA para la comercializacion de productos agricolas en
+Casanare. Un productor publica su oferta enviando una **nota de voz por
+Telegram**; un comprador la encuentra **preguntando en lenguaje natural**.
+
+> 🥇 **Primer lugar — Hackathon Regional Casanare**, Colombia 5.0 (27–28 de
+> agosto de 2026). Equipo **Control-Z**. Reto "Casanare Diversifica: Agentes de
+> IA para la Cadena Productiva y Cultural del Llano", con MinTIC, TEVEANDINA
+> S.A.S. y la Universidad Distrital Francisco Jose de Caldas.
+
+---
+
+## El problema
+
+Un productor agricola tiene dificultades para comercializar: comparar precios,
+llegar a compradores directos y publicar lo que tiene disponible. Las soluciones
+digitales habituales exigen descargar una app, registrarse y aprender una
+plataforma nueva — y cada uno de esos pasos es una barrera de adopcion.
+
+## La decision de diseno
+
+En vez de construir una app movil, la solucion se monto sobre un canal que el
+productor **ya usa**: Telegram. Y sobre la forma de comunicacion mas natural
+posible: hablar.
+
+\`\`\`
+Productor -> nota de voz por Telegram -> procesamiento con IA
+          -> producto, cantidad, precio, ubicacion -> validacion y normalizacion
+          -> publicacion -> catalogo digital
+Comprador -> consulta en lenguaje natural -> la IA interpreta la busqueda
+          -> ofertas relevantes -> contacto directo con el productor
+\`\`\`
+
+## Los tres agentes
+
+| Agente | Responsabilidad |
+| --- | --- |
+| **1 — Recepcion y extraccion** | Interpreta el mensaje del productor (voz o texto) y lo convierte en datos estructurados: producto, cantidad, precio, ubicacion, nombre y telefono. Mantiene el estado de la conversacion hasta completar la informacion. |
+| **2 — Estructuracion y persistencia** | Valida y organiza la oferta antes de guardarla. Normaliza unidades, nombres de productos y municipios para que ofertas expresadas de distinta forma sean comparables. |
+| **3 — Atencion y busqueda** | Interpreta la consulta del comprador, identifica producto y ubicacion, busca ofertas, las ordena por relevancia y entrega el contacto del productor. |
+
+## Normalizacion: solo donde hay equivalencia real
+
+El agente 2 convierte entre unidades **cuando la equivalencia es fija** — por
+ejemplo arrobas y kilogramos. Cuando no la hay (un "bulto", un "racimo"), el
+sistema **conserva la informacion original** en vez de inventar una conversion.
+Un dato incompleto es recuperable; un dato incorrecto contamina el catalogo.
+
+## Tolerancia a fallos
+
+El sistema degrada la funcionalidad en lugar de detener el flujo:
+
+- Si falla la extraccion por IA, vuelve a pedir la informacion que falta.
+- Si falla la clasificacion de intencion, cae a palabras clave.
+- Si falla la busqueda avanzada, usa una busqueda alternativa.
+- Si falla la sintesis de voz, mantiene la respuesta en texto.
+- Ante un problema temporal de un servicio externo, informa al usuario sin
+  exponer detalles tecnicos.
+
+## Pruebas
+
+**344 pruebas automatizadas**, disenadas para correr **sin depender de Supabase,
+Telegram ni de los modelos de IA**. Cubren extraccion, validacion, conversaciones
+entre turnos, restriccion territorial a Casanare, normalizacion de unidades,
+conversion de precios, deduplicacion, interpretacion de consultas, ranking,
+clasificacion de intencion, enrutamiento del webhook, manejo de archivos y
+mensajes, panel administrativo, autenticacion y el flujo de voz.
+
+## Stack
+
+- **Backend:** Python 3.12, FastAPI, Pydantic
+- **Frontend:** Angular 18
+- **Datos:** Supabase (PostgreSQL)
+- **Canal:** Telegram Bot API (webhooks)
+- **IA y voz:** modelos de lenguaje via API, Groq Whisper (transcripcion), Edge TTS (sintesis)
+- **Infraestructura:** Docker, Render (API), Vercel (panel)
+
+## Hacia donde puede evolucionar
+
+Construido en el marco de una hackathon, con puntos claros de crecimiento: mover
+el estado conversacional y las sesiones del panel de memoria a almacenamiento
+persistente, separar el bot de productor del de comprador, agregar historico de
+precios, ampliar a WhatsApp y validar con pilotos junto a productores reales.
+
+---
+
+Proyecto desarrollado en equipo (Control-Z).
+`;
+
 export const projects: Project[] = [
+  {
+    id: "agroia",
+    name: "AgroIA Casanare",
+    stack: "Python 3.12 / FastAPI + Angular 18 + Supabase + Telegram Bot API",
+    status: "completed",
+    description:
+      "🥇 Primer lugar en la Hackathon Regional Casanare (Colombia 5.0). Sistema de tres agentes de IA que permite a un productor agrícola publicar su oferta con una nota de voz por Telegram, y a un comprador encontrarla preguntando en lenguaje natural — sin instalar apps ni crear cuentas.",
+    icon: "🌾",
+    technologies: [
+      "Python 3.12",
+      "FastAPI",
+      "Pydantic",
+      "Angular 18",
+      "Supabase (PostgreSQL)",
+      "Telegram Bot API",
+      "LLM vía API",
+      "Groq Whisper",
+      "Edge TTS",
+      "Docker",
+      "Render",
+      "Vercel",
+    ],
+    features: [
+      "Publicación de ofertas por nota de voz: sin app, sin registro, sin aprender una plataforma nueva",
+      "Extracción de producto, cantidad, precio y ubicación desde lenguaje natural, con estado conversacional entre turnos",
+      "Normalización de unidades, productos y municipios para hacer comparables ofertas expresadas de distinta forma",
+      "Búsqueda en lenguaje natural con ranking por relevancia y contacto directo al productor",
+      "344 pruebas automatizadas, ejecutables sin depender de Supabase, Telegram ni los modelos de IA",
+      "Degradación controlada ante fallos: respaldo por palabras clave, búsqueda alternativa y respuesta solo texto",
+    ],
+    metrics: [
+      { label: "Puesto", value: "1.º 🥇" },
+      { label: "Agentes de IA", value: "3" },
+      { label: "Pruebas", value: "344" },
+      { label: "Duración", value: "48 h" },
+    ],
+    modules: [
+      {
+        icon: "🎙️",
+        title: "Agente 1 — Recepción y extracción",
+        description:
+          "Interpreta el mensaje del productor, llegue por voz o por texto, y lo convierte en información estructurada: producto, cantidad, precio, ubicación, nombre y teléfono. Mantiene el estado de la conversación hasta completar los datos que falten.",
+        tag: "Entrada",
+      },
+      {
+        icon: "⚖️",
+        title: "Agente 2 — Estructuración y persistencia",
+        description:
+          "Valida y organiza la oferta antes de guardarla. Normaliza unidades, nombres de productos y municipios; convierte entre arrobas y kilogramos donde la equivalencia es fija, y conserva el dato original cuando no la hay (un 'bulto' o un 'racimo' no siempre pesan lo mismo).",
+        tag: "Datos",
+      },
+      {
+        icon: "🔎",
+        title: "Agente 3 — Atención y búsqueda",
+        description:
+          "Orientado al comprador. Interpreta la consulta en lenguaje natural, identifica producto y ubicación, busca las ofertas disponibles, las ordena por relevancia y entrega el contacto directo del productor.",
+        tag: "Salida",
+      },
+    ],
+    architecture: {
+      summary:
+        "Backend en capas con responsabilidades separadas: los agentes concentran la lógica de negocio y cada servicio externo vive aislado en su propio módulo de integración. Gracias a ese aislamiento fue posible cambiar de proveedor de IA y de voz sin tocar la lógica de los agentes.",
+      layers: [
+        { layer: "api/routers/", detail: "Endpoints FastAPI y enrutamiento del webhook de Telegram." },
+        { layer: "agents/", detail: "Los tres agentes: recepción y extracción, estructuración y persistencia, atención y búsqueda. Aquí vive la lógica de negocio." },
+        { layer: "integrations/", detail: "Servicios externos aislados: LLM vía API, Groq Whisper (transcripción), Edge TTS (síntesis de voz), Telegram." },
+        { layer: "repositories/", detail: "Acceso a datos sobre Supabase (PostgreSQL), separado de la lógica de los agentes." },
+        { layer: "schemas/", detail: "Contratos de datos con Pydantic: validación en la frontera, no dispersa por el código." },
+        { layer: "Frontend", detail: "Panel administrativo en Angular 18, desplegado en Vercel." },
+        { layer: "Infraestructura", detail: "Docker; API en Render y panel en Vercel." },
+        { layer: "Calidad", detail: "344 pruebas automatizadas que corren sin servicios externos, más degradación controlada ante fallos." },
+      ],
+    },
+    readme: AGROIA_README,
+  },
   {
     id: "zona-segura",
     name: "Zona Segura",
