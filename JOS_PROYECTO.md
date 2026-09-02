@@ -183,8 +183,22 @@ Sonidos reales (sintetizados via Web Audio, sin assets externos), wallpapers (6 
 **Fase 5 — Sistema de versiones evolutivo** ✅
 Nueva app `Versions` (`src/apps/Versions.tsx` + `src/data/versions.ts`), ícono propio en el escritorio, ventana registrada en `WindowManager`/`windowStore`/`apps.ts`/`icons.tsx`, y comando `version`/`changelog` en la Terminal. v1.0 Estudiante ADSO (released) → v2.0 Monitor SENA (current) → v3.0 Primer empleo / v4.0 Nuevas certificaciones / v5.0 Metas futuras (roadmap, marcadas explícitamente como no logradas aún). El changelog de v1.0/v2.0 esta anclado a hechos reales ya presentes en `profile.ts` (incluida la certificación de Marketing Digital, que estaba en el CV pero faltaba en el proyecto — se agregó). No gatea ni oculta ninguna app real detrás de una versión: es un historial/roadmap narrativo, no un sistema de desbloqueo funcional (decisión consciente: un portafolio para reclutadores no debe esconder contenido).
 
-**Fase 6 — Juan AI + responsividad + optimización** 🔜
-Asistente conversacional dentro del sistema, modo mobile simplificado, lazy loading por app, auditoría de accesibilidad y SEO.
+**Fase 6 — Juan AI + responsividad + optimización** 🔜 (en curso)
+Asistente conversacional dentro del sistema, lazy loading por app, auditoría de accesibilidad y SEO.
+
+*Modo mobile* ✅ — resuelto sin encoger el escritorio. Por debajo de 768px (`useIsMobile`)
+`App.tsx` deja de montar el escritorio y sirve `MobileShell.tsx`, que envuelve el
+portafolio tradicional que ya existía en `src/traditional/`. El razonamiento: un sistema
+de ventanas arrastrables está pensado para ratón y pantalla grande, y la mayoría de
+visitas llegan desde un móvil (enlace compartido en LinkedIn/WhatsApp) — encoger JOS lo
+volvía inservible, así que el móvil recibe el mismo contenido en el formato que esa
+pantalla sí sabe mostrar. Detalles: el escritorio sigue accesible con un botón flotante y
+esa elección se recuerda (`jos-force-desktop` en localStorage); los deep links
+(`?open=project:agroia`) se traducen a la sección equivalente de la página vía
+`DEEP_LINK_SECTION`, en vez de ignorarse; el auto-lock, la notificación de bienvenida y la
+apertura de ventanas se desactivan en móvil. `MobileShell` va en `lazy()`, así que el
+escritorio no arrastra el portafolio tradicional en su bundle de arranque
+(`TraditionalPortfolio` quedó en un chunk propio de 16 kB, compartido con `BrowserApp`).
 
 **Pase de pulido premium** (sesión posterior a Fase 5, en curso, fase a fase):
 
